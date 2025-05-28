@@ -18,32 +18,34 @@ function App() {
   const [result, setResult] = useState(null);
 
   const callApi = async (text) => {
-  setLoading(true);
-  setError('');
-  setResult(null);
-  try {
-    const response = await fetch(
-      'http://ai-news-app-env.eba-pc3t4u5j.ap-southeast-1.elasticbeanstalk.com/analyze',
-      {
+    setLoading(true);
+    setError('');
+    setResult(null);
+    try {
+      const backendUrl =
+        window.location.hostname === 'localhost'
+          ? 'http://ai-news-app-env.eba-pc3t4u5j.ap-southeast-1.elasticbeanstalk.com/analyze'
+          : 'https://ai-news-app-env.eba-pc3t4u5j.ap-southeast-1.elasticbeanstalk.com/analyze';
+
+      const response = await fetch(backendUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text }),
+      });
+      if (!response.ok) throw new Error(`API error: ${response.statusText}`);
+      const data = await response.json();
+      setResult(data);
+      message.success('Analysis successful!');
+    } catch (e) {
+      if (e.message === 'Failed to fetch') {
+        setError('Unable to connect to the server. Please check your internet connection or try again later.');
+      } else {
+        setError(e.message || 'Failed to call API');
       }
-    );
-    if (!response.ok) throw new Error(`API error: ${response.statusText}`);
-    const data = await response.json();
-    setResult(data);
-    message.success('Analysis successful!');
-  } catch (e) {
-    if (e.message === 'Failed to fetch') {
-      setError('Unable to connect to the server. Please check your internet connection or try again later.');
-    } else {
-      setError(e.message || 'Failed to call API');
+    } finally {
+      setLoading(false);
     }
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   const handleSearch = () => {
     if (!query.trim()) {
@@ -200,59 +202,59 @@ function App() {
         )}
 
         {result && (
-  <div
-    style={{
-      marginTop: 16,
-      maxWidth: 600,
-      width: '100%',
-      textAlign: 'left',
-    }}
-  >
-    <Title level={4}>News Article Summary</Title>
+          <div
+            style={{
+              marginTop: 16,
+              maxWidth: 600,
+              width: '100%',
+              textAlign: 'left',
+            }}
+          >
+            <Title level={4}>News Article Summary</Title>
 
-    {result.summary?.trim() ? (
-      <>
-        <p>{result.summary}</p>
-      </>
-    ) : (
-      <p><i>No summary could be generated from the text provided.</i></p>
-    )}
+            {result.summary?.trim() ? (
+              <>
+                <p>{result.summary}</p>
+              </>
+            ) : (
+              <p><i>No summary could be generated from the text provided.</i></p>
+            )}
 
-    <Title level={4}>People Mentioned</Title>
-    {result.people?.length > 0 ? (
-      <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 16 }}>
-        <tbody>
-          {result.people.map((person, i) => (
-            <tr key={i}>
-              <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>
-                {person}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    ) : (
-      <p><i>No people identified.</i></p>
-    )}
+            <Title level={4}>People Mentioned</Title>
+            {result.people?.length > 0 ? (
+              <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 16 }}>
+                <tbody>
+                  {result.people.map((person, i) => (
+                    <tr key={i}>
+                      <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>
+                        {person}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p><i>No people identified.</i></p>
+            )}
 
-   <Title level={4}>Countries Mentioned</Title>
-    {result.countries?.length > 0 ? (
-      <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 16 }}>
-        <tbody>
-          {result.countries.map((country, i) => (
-            <tr key={i}>
-              <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>
-                {country}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    ) : (
-      <p><i>No countries identified.</i></p>
-    )}
-  </div>
-)}
+            <Title level={4}>Countries Mentioned</Title>
+            {result.countries?.length > 0 ? (
+              <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 16 }}>
+                <tbody>
+                  {result.countries.map((country, i) => (
+                    <tr key={i}>
+                      <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>
+                        {country}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p><i>No countries identified.</i></p>
+            )}
+          </div>
+        )}
       </div>
 
       <div
