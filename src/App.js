@@ -24,8 +24,8 @@ function App() {
     try {
       const backendUrl =
         window.location.hostname === 'localhost'
-          ? 'http://ai-news-app-env.eba-pc3t4u5j.ap-southeast-1.elasticbeanstalk.com/analyze'
-          : 'https://ai-news-app-env.eba-pc3t4u5j.ap-southeast-1.elasticbeanstalk.com/analyze';
+          ? 'http://backend.ai-news-app.ip-ddns.com//analyze'
+          : 'https://backend.ai-news-app.ip-ddns.com/analyze';
 
       const response = await fetch(backendUrl, {
         method: 'POST',
