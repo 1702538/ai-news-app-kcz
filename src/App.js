@@ -22,11 +22,7 @@ function App() {
     setError('');
     setResult(null);
     try {
-      const backendUrl =
-        window.location.hostname === 'localhost'
-          ? 'http://backend.ai-news-app.ip-ddns.com//analyze'
-          : 'https://backend.ai-news-app.ip-ddns.com/analyze';
-
+      const backendUrl = 'https://backend.ai-news-app.ip-ddns.com/analyze';
       const response = await fetch(backendUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -159,7 +155,7 @@ function App() {
           placeholder="Enter search term"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          style={{ maxWidth: 600 }}
+          style={{ maxWidth: 600, fontSize: '16px' }}
           disabled={loading}
         />
 
