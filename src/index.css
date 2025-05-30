@@ -10,12 +10,12 @@ code {
     monospace;
 }
 
-.alternatively-text {
-  font-size: 14px; /* default for desktop */
+.break-mobile {
+  display: inline;
 }
 
-@media (max-width: 768px) {
-  .alternatively-text {
-    font-size: 9px; /* smaller on mobile */
+@media (max-width: 480px) {
+  .break-mobile {
+    display: block; /* forces line break only on mobile */
   }
 }
