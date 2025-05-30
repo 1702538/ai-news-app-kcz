@@ -9,3 +9,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.alternatively-text {
+  font-size: 14px; /* default for desktop */
+}
+
+@media (max-width: 768px) {
+  .alternatively-text {
+    font-size: 12px; /* smaller on mobile */
+  }
+}
