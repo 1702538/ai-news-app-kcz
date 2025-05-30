@@ -1,7 +1,7 @@
-import React from "react";
 import { useAuth } from "react-oidc-context";
 import { useState, useEffect } from "react";
-import { Typography, message, Button } from "antd";
+import { Typography, message, Button, Tooltip, Avatar } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 import TextInputForm from "./components/TextInputForm";
 import FileUploader from "./components/FileUploader";
 import ResultDisplay from "./components/ResultDisplay";
@@ -13,7 +13,6 @@ const { Title, Text } = Typography;
 function App() {
   const auth = useAuth();
 
-  // Your existing states and hooks
   const [query, setQuery] = useState("");
   const { loading, error, result, callApi, clearState } = useApi();
 
@@ -21,7 +20,6 @@ function App() {
     document.title = "AI News Search";
   }, []);
 
-  // API calls
   const handleTextSubmit = () => {
     if (!query.trim()) {
       message.error("Please enter in plain text or upload a file to search.");
@@ -40,10 +38,9 @@ function App() {
     clearState();
   };
 
-  // Sign out global (from Cognito)
   const signOutRedirect = () => {
     const clientId = "407du18cnkp5u5u978gdrpi10a";
-    const logoutUri = "https://main.d25ickgp2g070n.amplifyapp.com/";
+    const logoutUri = "https://main.d25ickgp2g070n.amplifyapp.com";
     const cognitoDomain =
       "https://ap-southeast-1vffrnajfr.auth.ap-southeast-1.amazoncognito.com";
     window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(
@@ -51,17 +48,14 @@ function App() {
     )}`;
   };
 
-  // If loading auth state
   if (auth.isLoading) {
     return <div>Loading authentication...</div>;
   }
 
-  // If auth error
   if (auth.error) {
     return <div>Error: {auth.error.message}</div>;
   }
 
-  // If not authenticated, show sign-in button
   if (!auth.isAuthenticated) {
     return (
       <div style={{ padding: 20, textAlign: "center" }}>
@@ -73,9 +67,23 @@ function App() {
     );
   }
 
-  // Authenticated: show your app UI
   return (
     <div style={{ minHeight: "100dvh", display: "flex", flexDirection: "column" }}>
+      {/* Top right user avatar */}
+      <div
+        style={{
+          position: "fixed",
+          top: 16,
+          right: 16,
+          cursor: "pointer",
+          zIndex: 1000,
+        }}
+      >
+        <Tooltip title={auth.user?.profile.email || "User"}>
+          <Avatar icon={<UserOutlined />} />
+        </Tooltip>
+      </div>
+
       <div
         style={{
           flex: 1,
@@ -88,7 +96,9 @@ function App() {
         }}
       >
         <Title>AI News Search</Title>
-        <Text>Welcome, {auth.user?.profile.email}</Text>
+
+        {/* Removed the email text from here */}
+
         <Button onClick={() => auth.removeUser()}>Sign out (local)</Button>
         <Button onClick={signOutRedirect} style={{ marginLeft: 10 }}>
           Sign out (global)

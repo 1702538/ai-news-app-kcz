@@ -11,8 +11,6 @@ const cognitoAuthConfig = {
   redirect_uri: "https://main.d25ickgp2g070n.amplifyapp.com",
   response_type: "code",
   scope: "openid email profile",
-
-  // ✅ Static metadata to avoid CORS on discovery endpoint
   metadata: {
     issuer: cognitoDomain,
     authorization_endpoint: `${cognitoDomain}/oauth2/authorize`,
@@ -20,6 +18,9 @@ const cognitoAuthConfig = {
     userinfo_endpoint: `${cognitoDomain}/oauth2/userInfo`,
     end_session_endpoint: `${cognitoDomain}/logout`,
     jwks_uri: `${cognitoDomain}/.well-known/jwks.json`,
+  },
+  onSigninCallback: () => {
+    window.history.replaceState({}, document.title, window.location.pathname);
   },
 };
 
