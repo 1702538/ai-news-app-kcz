@@ -86,7 +86,7 @@ function App() {
           placement="bottomRight"
           content={
             <div style={{ display: "flex", flexDirection: "column", gap: 8, minWidth: 180 }}>
-              <span>Hello! Signed in as</span>
+              <span><strong>Hello! You are</strong></span>
               <div>{auth.user?.profile.email || "User"}</div>
               <Button
                 type="primary"
