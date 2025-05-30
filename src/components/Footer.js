@@ -1,15 +1,14 @@
-import { Typography, Layout } from 'antd';
+import { Typography } from 'antd';
 
-const { Footer: AntFooter } = Layout;
 const { Text } = Typography;
 
 function Footer() {
   return (
-    <AntFooter style={{ textAlign: 'center', padding: '24px 0 10px' }}>
-      <Text type="secondary" style={{ fontSize: 12 }}>
+    <div style={{ textAlign: 'center', padding: '24px 0 10px' }}>
+      <Text style={{ fontSize: 12, color: '#888', fontFamily: 'Roboto, Helvetica Neue, Arial, sans-serif' }}>
         AI-powered by Mistral AI | Design UI by Ant Design
       </Text>
-    </AntFooter>
+    </div>
   );
 }
 

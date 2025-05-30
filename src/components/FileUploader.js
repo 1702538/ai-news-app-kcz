@@ -15,17 +15,16 @@ function FileUploader({ onUpload, loading }) {
     <div
       style={{
         display: 'flex',
-        flexWrap: 'wrap',
         alignItems: 'center',
         gap: 12,
-        minHeight: 48, // ensures stable vertical alignment
+        whiteSpace: 'nowrap', // prevent wrapping
       }}
     >
       <Text
         style={{
           fontSize: 13,
           fontWeight: 500,
-          whiteSpace: 'nowrap',
+          flexShrink: 0, // prevent shrinking too small
         }}
       >
         Alternatively, you may
