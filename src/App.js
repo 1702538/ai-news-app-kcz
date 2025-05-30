@@ -58,7 +58,7 @@ function App() {
   }
 
   return (
-    <div style={{ minHeight: "100dvh", display: "flex", flexDirection: "column" }}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       {/* Top right user avatar with hover logout button */}
       <div
         style={{
@@ -101,7 +101,7 @@ function App() {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          padding: 20,
+          padding: "20px 20px 60px",
           gap: 24,
         }}
       >
