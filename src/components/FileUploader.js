@@ -13,7 +13,7 @@ const allowedTypes = [
 function FileUploader({ onUpload, loading }) {
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <Text className="alternatively-text">Alternatively, you may also</Text>
+            <Text className="alternatively-text">Alternatively, you may</Text>
             <Upload
                 maxCount={1}
                 accept=".txt,.doc,.docx"
