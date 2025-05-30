@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+// Function to 
 function useApi() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
