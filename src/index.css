@@ -16,6 +16,6 @@ code {
 
 @media (max-width: 768px) {
   .alternatively-text {
-    font-size: 11px; /* smaller on mobile */
+    font-size: 10px; /* smaller on mobile */
   }
 }
