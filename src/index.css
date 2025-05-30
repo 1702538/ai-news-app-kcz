@@ -9,13 +9,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.break-mobile {
-  display: inline;
-}
-
-@media (max-width: 480px) {
-  .break-mobile {
-    display: block; /* forces line break only on mobile */
-  }
-}
