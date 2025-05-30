@@ -69,7 +69,7 @@ function App() {
 
   return (
     <div style={{ minHeight: "100dvh", display: "flex", flexDirection: "column" }}>
-      {/* Top right user avatar */}
+      {/* Top right user avatar with hover logout button */}
       <div
         style={{
           position: "fixed",
@@ -77,11 +77,24 @@ function App() {
           right: 16,
           cursor: "pointer",
           zIndex: 1000,
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
         }}
+        className="user-menu-container"
       >
         <Tooltip title={auth.user?.profile.email || "User"}>
           <Avatar icon={<UserOutlined />} />
         </Tooltip>
+        <Button
+          type="link"
+          danger
+          style={{ display: "none", padding: 0, height: "auto" }}
+          onClick={() => auth.removeUser()}
+          className="logout-button"
+        >
+          Sign out
+        </Button>
       </div>
 
       <div
@@ -97,12 +110,8 @@ function App() {
       >
         <Title>AI News Search</Title>
 
-        {/* Removed the email text from here */}
-
-        <Button onClick={() => auth.removeUser()}>Sign out (local)</Button>
-        <Button onClick={signOutRedirect} style={{ marginLeft: 10 }}>
-          Sign out (global)
-        </Button>
+        {/* You can remove this local sign out button if you want, since signout is now on hover */}
+        {/* <Button onClick={() => auth.removeUser()}>Sign out (local)</Button> */}
 
         <TextInputForm
           query={query}
@@ -124,6 +133,13 @@ function App() {
       </div>
 
       <Footer />
+
+      {/* Add CSS for hover effect */}
+      <style>{`
+        .user-menu-container:hover .logout-button {
+          display: inline-block !important;
+        }
+      `}</style>
     </div>
   );
 }
