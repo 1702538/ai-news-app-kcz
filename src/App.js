@@ -1,6 +1,6 @@
 import { useAuth } from "react-oidc-context";
 import { useState, useEffect } from "react";
-import { Typography, message, Button, Tooltip, Avatar } from "antd";
+import { Typography, message, Button, Avatar, Popover } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import TextInputForm from "./components/TextInputForm";
 import FileUploader from "./components/FileUploader";
@@ -81,20 +81,26 @@ function App() {
           alignItems: "center",
           gap: 8,
         }}
-        className="user-menu-container"
       >
-        <Tooltip title={auth.user?.profile.email || "User"}>
-          <Avatar icon={<UserOutlined />} />
-        </Tooltip>
-        <Button
-          type="link"
-          danger
-          style={{ display: "none", padding: 0, height: "auto" }}
-          onClick={() => auth.removeUser()}
-          className="logout-button"
+        <Popover
+          placement="bottomRight"
+          content={
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, minWidth: 180 }}>
+              <div>{auth.user?.profile.email || "User"}</div>
+              <Button
+                type="primary"
+                danger
+                size="small"
+                onClick={() => auth.removeUser()}
+              >
+                Sign out
+              </Button>
+            </div>
+          }
+          trigger="click"
         >
-          Sign out
-        </Button>
+          <Avatar icon={<UserOutlined />} />
+        </Popover>
       </div>
 
       <div
