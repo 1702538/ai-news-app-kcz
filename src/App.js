@@ -110,9 +110,6 @@ function App() {
       >
         <Title>AI News Search</Title>
 
-        {/* You can remove this local sign out button if you want, since signout is now on hover */}
-        {/* <Button onClick={() => auth.removeUser()}>Sign out (local)</Button> */}
-
         <TextInputForm
           query={query}
           setQuery={setQuery}

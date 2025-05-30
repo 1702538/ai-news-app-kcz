@@ -1,31 +1,27 @@
-import { Upload, Button, message } from 'antd';
+import { Upload, Button, message, Typography } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { parseFile } from '../utils/fileParser';
 
+const { Text } = Typography;
+
 const allowedTypes = [
-    'text/plain',
-    'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'text/plain',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 ];
 
 function FileUploader({ onUpload, loading }) {
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 12,
-        fontFamily: "'Roboto', 'Helvetica Neue', Arial, sans-serif", // Add this line
-      }}
-    >
-      <span>Alternatively, you may also</span>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+      <Text>Alternatively, you may also</Text>
       <Upload
         maxCount={1}
         accept=".txt,.doc,.docx"
         showUploadList={false}
         beforeUpload={(file) => {
           const isAllowed = allowedTypes.includes(file.type);
-          if (!isAllowed) message.error(`${file.name} is not a .txt, .doc, or .docx file`);
+          if (!isAllowed)
+            message.error(`${file.name} is not a .txt, .doc, or .docx file`);
           return isAllowed || Upload.LIST_IGNORE;
         }}
         customRequest={({ file, onSuccess, onError }) => {
