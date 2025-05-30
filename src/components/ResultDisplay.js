@@ -1,6 +1,6 @@
 import { Typography } from 'antd';
 
-const { Title, Paragraph } = Typography;
+const { Title, Paragraph, Text } = Typography;
 
 function ResultDisplay({ result }) {
   return (
