@@ -126,8 +126,6 @@ function App() {
         {result && <ResultDisplay result={result} />}
       </div>
 
-      <Footer />
-
       {/* Add CSS for hover effect */}
       <style>{`
         .user-menu-container:hover .logout-button {
