@@ -38,16 +38,6 @@ function App() {
     clearState();
   };
 
-  const signOutRedirect = () => {
-    const clientId = "407du18cnkp5u5u978gdrpi10a";
-    const logoutUri = "https://main.d25ickgp2g070n.amplifyapp.com";
-    const cognitoDomain =
-      "https://ap-southeast-1vffrnajfr.auth.ap-southeast-1.amazoncognito.com";
-    window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(
-      logoutUri
-    )}`;
-  };
-
   if (auth.isLoading) {
     return <div>Loading authentication...</div>;
   }
