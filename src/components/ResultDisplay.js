@@ -3,6 +3,19 @@ import { Typography } from 'antd';
 const { Title, Paragraph, Text } = Typography;
 
 function ResultDisplay({ result }) {
+
+  const cleanList = (items) => {
+    if (!items || !items.length) return [];
+    return items
+      .flatMap(item => item.split('\n')) // split multi-line strings
+      .map(name => name.trim().replace(/^[-\d.]+\s*/, '')) // remove leading "- ", "1. ", "2. ", etc.
+      .filter(name => name.length > 0);
+  };
+
+  const people = cleanList(result.people);
+  const countries = cleanList(result.countries);
+  const organizations = cleanList(result.organizations);
+
   return (
     <div style={{ marginTop: 16, maxWidth: 600, width: '100%', textAlign: 'left' }}>
       <Title level={4}>News Article Summary</Title>
@@ -13,10 +26,10 @@ function ResultDisplay({ result }) {
       )}
 
       <Title level={4}>People Mentioned</Title>
-      {result.people?.length ? (
+      {people.length ? (
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 16 }}>
           <tbody>
-            {result.people.map((person, i) => (
+            {people.map((person, i) => (
               <tr key={i}>
                 <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>
                   <Text>{person}</Text>
@@ -30,10 +43,10 @@ function ResultDisplay({ result }) {
       )}
 
       <Title level={4}>Countries Mentioned</Title>
-      {result.countries?.length ? (
+      {countries.length ? (
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 16 }}>
           <tbody>
-            {result.countries.map((country, i) => (
+            {countries.map((country, i) => (
               <tr key={i}>
                 <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>
                   <Text>{country}</Text>
@@ -46,21 +59,21 @@ function ResultDisplay({ result }) {
         <Paragraph italic>No countries identified.</Paragraph>
       )}
 
-       <Title level={4}>Organizations Mentioned</Title>
-      {result.organizations?.length ? (
+      <Title level={4}>Organizations Mentioned</Title>
+      {organizations.length ? (
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 16 }}>
           <tbody>
-            {result.organizations.map((organization, i) => (
+            {organizations.map((org, i) => (
               <tr key={i}>
                 <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>
-                  <Text>{organization}</Text>
+                  <Text>{org}</Text>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       ) : (
-        <Paragraph italic>No countries identified.</Paragraph>
+        <Paragraph italic>No organizations identified.</Paragraph>
       )}
     </div>
   );
