@@ -5,7 +5,7 @@ import TextInputForm from './components/TextInputForm';
 import FileUploader from './components/FileUploader';
 import ResultDisplay from './components/ResultDisplay';
 import Footer from './components/Footer';
-import useApi from './hooks/useAPI';
+import useApi from './hooks/useApi';
 
 // Typography components
 const { Title, Text } = Typography;
