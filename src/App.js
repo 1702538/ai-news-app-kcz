@@ -42,39 +42,6 @@ function App() {
   return (
   <div style={{ height: "100dvh", display: "flex", flexDirection: "column" }}>
     {/* Top-right user avatar */}
-    <div
-      style={{
-        position: "fixed",
-        top: 16,
-        right: 16,
-        zIndex: 1000,
-        display: "flex",
-        alignItems: "center",
-        gap: 8,
-        cursor: "pointer",
-      }}
-    >
-      <Popover
-        placement="bottomRight"
-        content={
-          <div style={{ display: "flex", flexDirection: "column", gap: 8, minWidth: 180 }}>
-            <span><strong>Hello! You are</strong></span>
-            <div>{auth.user?.profile.email || "User"}</div>
-            <Button
-              type="primary"
-              danger
-              size="small"
-              onClick={() => auth.removeUser()}
-            >
-              Sign out
-            </Button>
-          </div>
-        }
-        trigger="click"
-      >
-        <Avatar icon={<UserOutlined />} />
-      </Popover>
-    </div>
 
     {/* Main content area */}
     <div
