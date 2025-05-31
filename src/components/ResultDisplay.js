@@ -5,6 +5,9 @@ const { Title, Paragraph, Text } = Typography;
 function ResultDisplay({ result }) {
   const parsedResult = typeof result === 'string' ? JSON.parse(result) : result;
 
+  // Function to remove leading numbers and dots like "1. ", "2. ", etc.
+  const cleanItem = (text) => text.replace(/^\d+\.\s*/, '');
+
   return (
     <div style={{ marginTop: 16, maxWidth: 600, width: '100%', textAlign: 'left' }}>
       <Title level={4}>News Article Summary</Title>
@@ -21,7 +24,7 @@ function ResultDisplay({ result }) {
             {parsedResult.people.map((person, i) => (
               <tr key={i}>
                 <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>
-                  <Text>{person}</Text>
+                  <Text>{cleanItem(person)}</Text>
                 </td>
               </tr>
             ))}
@@ -38,7 +41,7 @@ function ResultDisplay({ result }) {
             {parsedResult.countries.map((country, i) => (
               <tr key={i}>
                 <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>
-                  <Text>{country}</Text>
+                  <Text>{cleanItem(country)}</Text>
                 </td>
               </tr>
             ))}
@@ -55,7 +58,7 @@ function ResultDisplay({ result }) {
             {parsedResult.organizations.map((org, i) => (
               <tr key={i}>
                 <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>
-                  <Text>{org}</Text>
+                  <Text>{cleanItem(org)}</Text>
                 </td>
               </tr>
             ))}
