@@ -5,8 +5,8 @@ const { Title, Paragraph, Text } = Typography;
 function ResultDisplay({ result }) {
   const parsedResult = typeof result === 'string' ? JSON.parse(result) : result;
 
-  // Function to remove leading numbers and dots like "1. ", "2. ", etc.
-  const cleanItem = (text) => text.replace(/^\d+\.\s*/, '');
+  // Function to clean numbers/bullets like "1. ", "2. ", etc.
+  const cleanItem = (item) => item.replace(/^\d+\.\s*/, '');
 
   return (
     <div style={{ marginTop: 16, maxWidth: 600, width: '100%', textAlign: 'left' }}>
@@ -70,4 +70,5 @@ function ResultDisplay({ result }) {
     </div>
   );
 }
+
 export default ResultDisplay;
