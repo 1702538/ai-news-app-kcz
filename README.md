@@ -1,3 +1,56 @@
+# AI News Search Web Application
+
+An AI-powered web application that allows users to input or upload news articles in English or French. It returns a summary along with detected nationalities and people, with optional detection of organizations. Supports user authentication via AWS Cognito.
+
+---
+
+## 🚀 Features
+
+- 🔐 User authentication (OIDC-based)
+- 📄 Allow single file upload `.txt`, `.doc`, or `.docx` files
+- 🌍 Multi-language support (E.g., English & French)
+- 👤 Detect people and nationalities
+- 🧠 Summarize news using an AI backend
+- 📱 Responsive frontend with Ant Design
+
+---
+
+## 🛠 Setup Instructions
+
+### Prerequisites
+
+- Node.js (>=18)
+- Antd Design
+
+### Frontend Setup
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ==================================================================================================
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
