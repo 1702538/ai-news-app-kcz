@@ -1,107 +1,137 @@
-// Import necessary hooks and components
-import { useState, useEffect } from 'react';
-import { Typography, message } from 'antd';
-import TextInputForm from './components/TextInputForm';
-import FileUploader from './components/FileUploader';
-import ResultDisplay from './components/ResultDisplay';
-import Footer from './components/Footer';
+// src/App.js
+import { useAuth } from "react-oidc-context";
+import { useState, useEffect } from "react";
+import { Typography, message, Button, Avatar, Popover } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import TextInputForm from "./components/TextInputForm";
+import FileUploader from "./components/FileUploader";
+import ResultDisplay from "./components/ResultDisplay";
 import useApi from './hooks/useApi';
+import Footer from "./components/Footer";
 
-// Typography components
 const { Title, Text } = Typography;
 
-// Function for Main Page
 function App() {
-  // Set the state variable 'query' to store user input value
-  // Value of 'query' to be updated using setQuery
-  const [query, setQuery] = useState('');
+  const auth = useAuth();
 
-  // Custom useApi hook:
-  // - loading: API call status
-  // - error: any error from API call
-  // - result: API response data
-  // - callApi: function to trigger the API call
-  // - clearState: function to reset API-related state
+  const [query, setQuery] = useState("");
   const { loading, error, result, callApi, clearState } = useApi();
 
-  // Set the title of the browser tab
   useEffect(() => {
-    document.title = 'AI News Search'
+    document.title = "AI News Search";
   }, []);
 
-  // Function to handle user's input
-  // If the input is empty or only whitespace (using ! to detect null, undefined, or an empty string ("")), show error message
-  // Else, submit user's input by calling the callApi function (imported from useApi hook)
   const handleTextSubmit = () => {
     if (!query.trim()) {
-      message.error('Please enter in plain text or upload a file to search.');
+      message.error("Please enter in plain text or upload a file to search.");
       return;
     }
     callApi(query);
   };
 
-  // Function to handle text extracted from uploaded file
-  // Uses async/await to update query state and call the API asynchronously
   const handleFileUpload = async (text) => {
     setQuery(text);
     await callApi(text);
   };
-  // Function to clear the user input by calling the clearState function (imported from useApi hook)
+
   const handleClear = () => {
-    setQuery('');
+    setQuery("");
     clearState();
   };
 
-  // HTML/CSS code
-  return (
-    <div style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: 20, gap: 24 }}>
-        <Title>AI News Search</Title>
+  if (auth.isLoading) {
+    return <div>Loading authentication...</div>;
+  }
 
-        {/*
-          TextInputForm component -> Textarea with 'Enter search term', Blue Button with 'Submit' and White button with 'Clear'
-          Description of props:
-          - query: State variable holding current value (what user types = source of truth)
-          - setQuery: Function to update the 'query' state variable
-          - onSubmit: Function to process user input on submit
-          - onClear: Function to clear user input and reset the page
-          - loading: State variable indicating if loading is in progress
-        */}
-        <TextInputForm
-          query={query}
-          setQuery={setQuery}
-          onSubmit={handleTextSubmit}
-          onClear={handleClear}
-          loading={loading}
-        />
+  if (auth.error) {
+    return <div>Error: {auth.error.message}</div>;
+  }
 
-        {/*
-          FileUploader component - Button to upload a file
-          Description of props:
-          - onUpload: Async function to handle the uploaded file content
-          - loading: State variable indicating whether the upload/API call is in progress
-        */}
-        <FileUploader onUpload={handleFileUpload} loading={loading} />
-
-        {/*
-          Error component - Conditionally render error message when applicable
-          - Displays the error text styled as danger with a max width for readability
-        */}
-        {error && <Text type="danger" style={{ maxWidth: 600 }}>{error}</Text>}
-
-        {/*
-          Result component - Conditionally render results when applicable
-          - Displays the results generated from the API
-        */}
-        {result && <ResultDisplay result={result} />}
+  if (!auth.isAuthenticated) {
+    return (
+      <div style={{ padding: 20, textAlign: "center" }}>
+        <Title level={3}>Please sign in to continue</Title>
+        <Button type="primary" onClick={() => auth.signinRedirect()}>
+          Sign In
+        </Button>
       </div>
+    );
+  }
 
-        {/*
-          Footer component
-        */}
-      <Footer />
+  return (
+  <div style={{ height: "100dvh", display: "flex", flexDirection: "column" }}>
+    {/* Top-right user avatar */}
+    <div
+      style={{
+        position: "fixed",
+        top: 16,
+        right: 16,
+        zIndex: 1000,
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+        cursor: "pointer",
+      }}
+    >
+      <Popover
+        placement="bottomRight"
+        content={
+          <div style={{ display: "flex", flexDirection: "column", gap: 8, minWidth: 180 }}>
+            <span><strong>Hello! You are</strong></span>
+            <div>{auth.user?.profile.email || "User"}</div>
+            <Button
+              type="primary"
+              danger
+              size="small"
+              onClick={() => auth.removeUser()}
+            >
+              Sign out
+            </Button>
+          </div>
+        }
+        trigger="click"
+      >
+        <Avatar icon={<UserOutlined />} />
+      </Popover>
     </div>
-  );
+
+    {/* Main content area */}
+    <div
+      style={{
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 20,
+        gap: 24,
+      }}
+    >
+      <Title>AI News Search</Title>
+
+      <TextInputForm
+        query={query}
+        setQuery={setQuery}
+        onSubmit={handleTextSubmit}
+        onClear={handleClear}
+        loading={loading}
+      />
+
+      <FileUploader onUpload={handleFileUpload} loading={loading} />
+
+      {error && (
+        <Text type="danger" style={{ maxWidth: 600 }}>
+          {error}
+        </Text>
+      )}
+
+      {result && <ResultDisplay result={result} />}
+    </div>
+
+    {/* Footer stays pinned below */}
+    <Footer />
+  </div>
+);
 }
-// Export the App component as the default export from this module
+
 export default App;
