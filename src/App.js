@@ -1,3 +1,4 @@
+// src/App.js
 import { useAuth } from "react-oidc-context";
 import { useState, useEffect } from "react";
 import { Typography, message, Button, Avatar, Popover } from "antd";
@@ -6,7 +7,7 @@ import TextInputForm from "./components/TextInputForm";
 import FileUploader from "./components/FileUploader";
 import ResultDisplay from "./components/ResultDisplay";
 import Footer from "./components/Footer";
-import useApi from "./hooks/useAPI";
+import useApi from "./hooks/useApi";
 
 const { Title, Text } = Typography;
 
@@ -58,18 +59,18 @@ function App() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-      {/* Top right user avatar with hover logout button */}
+    <div style={{ minHeight: "100dvh", display: "flex", flexDirection: "column" }}>
+      {/* Top-right user avatar */}
       <div
         style={{
           position: "fixed",
           top: 16,
           right: 16,
-          cursor: "pointer",
           zIndex: 1000,
           display: "flex",
           alignItems: "center",
           gap: 8,
+          cursor: "pointer",
         }}
       >
         <Popover
@@ -94,6 +95,7 @@ function App() {
         </Popover>
       </div>
 
+      {/* Main layout restored to old design */}
       <div
         style={{
           flex: 1,
@@ -101,7 +103,7 @@ function App() {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          padding: "20px 20px 60px",
+          padding: 20,
           gap: 24,
         }}
       >
@@ -126,12 +128,7 @@ function App() {
         {result && <ResultDisplay result={result} />}
       </div>
 
-      {/* Add CSS for hover effect */}
-      <style>{`
-        .user-menu-container:hover .logout-button {
-          display: inline-block !important;
-        }
-      `}</style>
+      <Footer />
     </div>
   );
 }
