@@ -1,17 +1,16 @@
-# AI News Search App
+# AI News Search Web Application
 
-This is an AI-powered web application that allows users to upload text files, documents files (.doc or .docx) or input text input of news articles (with multi-language support) to generate a summary and a list of detected nationalities, people, and optionally organizations.
+An AI-powered web application that allows users to input or upload news articles in English or French. It returns a summary along with detected nationalities and people, with optional detection of organizations. Supports user authentication via AWS Cognito.
 
 ---
 
 ## 🚀 Features
 
-- 🔐 User authentication via AWS Cognito (OIDC-based)
-- 📄 Upload `.txt`, `.doc`, or `.docx` files or enter raw text
-- 🌍 Multi-language support (English & French)
-- 👤 Detect people and nationalities (organizations optional)
+- 🔐 User authentication (OIDC-based)
+- 📄 Allow single file upload `.txt`, `.doc`, or `.docx` files
+- 🌍 Multi-language support (E.g., English & French)
+- 👤 Detect people and nationalities
 - 🧠 Summarize news using an AI backend
-- 📡 Optional AWS integration (S3, DynamoDB)
 - 📱 Responsive frontend with Ant Design
 
 ---
@@ -21,112 +20,109 @@ This is an AI-powered web application that allows users to upload text files, do
 ### Prerequisites
 
 - Node.js (>=18)
-- Python 3.10+ (for backend if used)
-- AWS CLI (if using AWS features)
-- `.env` files configured as needed
+- Antd Design
 
 ### Frontend Setup
 
-```bash
-cd ai-news-app-ui
-npm install
-npm start
+- 
 
+## ☁️ AWS Services Setup
+
+This application relies on several AWS services to enable user authentication and backend AI processing.
+
+### 1. 🔐 AWS Cognito
+
+| Item                | Description                                                                                                      |
+|---------------------|------------------------------------------------------------------------------------------------------------------|
+| **User Pool**       | Create a Cognito User Pool to manage user registration, sign-in, and profiles.                                   |
+| **App Client**      | Create an App Client under the User Pool without a client secret for use in the frontend.                        |
+| **Domain**          | Set up a Cognito Hosted UI domain or use your custom domain for authentication flows.                            |
+| **Callback URLs**   | Configure callback URLs to point to your frontend app (e.g., `http://localhost:3000` for development, or production URL). |
+| **OAuth 2.0 Settings** | Enable authorization code grant flow and specify allowed scopes (`openid`, `profile`, `email`).                 |
+ 
+### 2. 🖥️ Backend API Hosting
+
+| Item               | Description                                                                                                   |
+|:--------------------|:---------------------------------------------------------------------------------------------------------------|
+| **Hosting Options** | AWS Elastic Beanstalk (for containerized or Node.js apps)                                                  |
+| **API Endpoint**    | Ensure the API endpoint URL is configured in frontend environment variables (`REACT_APP_API_URL`).              |
+
+### 3. 🛡️ IAM Roles and Permissions
+
+| Item                       | Description                                                                              |
+|:----------------------------|:------------------------------------------------------------------------------------------|
+| **Least-privilege Roles**  | Assign least-privilege IAM roles to backend services for secure AWS resource access.     |
+| **Cognito Permissions**    | Ensure the Cognito User Pool has proper permissions and policies for app integration.     |
+
+### 4. ⚠️ Additional Notes
+
+| Item                  | Description                                                                                          |
+|:-----------------------|:------------------------------------------------------------------------------------------------------|
+| **HTTPS Usage**       | Use HTTPS endpoints for secure communication between frontend and backend.                           |
+| **Monitoring**        | Regularly monitor AWS service usage and costs.                                                      |
+| **Logging & Alerts**  | Consider configuring AWS CloudWatch for logging and alerting backend services.                       |
+
+
+<br/>
+
+# Part 2: Developing Processes
+
+This section provides an overview of a proposed architecture for processing up to **10,000 news articles per hour** using AWS services, with a focus on scalability, availability and cost effectiveness. 
 
 ---
 
+# 🏗️ Simple News Article Processing Architecture
+
+This is a minimal AWS setup to process up to **10,000 news articles per hour** with scalability, availability, and cost in mind.
+
+---
+
+## 1. Ingestion & Event Trigger
+
+| 🛠️ AWS Service           | 🎯 Role / Purpose                                                |
+|:--------------------------|:-----------------------------------------------------------------|
+| 📦 **Amazon S3**           | Store uploaded article files (`.txt`, `.doc`, `.docx`).         |
+| 🔔 **S3 Event Notification** | Trigger processing when a new file is uploaded.               |
 
 
 
+## 2. Processing & Storage
+
+| 🛠️ AWS Service          | 🎯 Role / Purpose                                                           |
+|:-------------------------|:----------------------------------------------------------------------------|
+| ⚡ **AWS Lambda**        | Calls Mistral AI API to process the data                                    |
+| 📚 **Amazon DynamoDB**   | Stores the processed data from Mistral AI (people, countries, organizations |
 
 
+## 3. API / Frontend Layer
 
+| 🛠️ AWS Service                  | 🎯 Role / Purpose                               |
+|:--------------------------------|:-------------------------------------------------|
+| 🌐 **Elastic Beanstalk**        | Hosts backend API that serves processed data.    |
+| 🖥️ **React App**                | Frontend UI to display data, hosted on Amplify.  |
 
+## Workflow Summary
 
+1. User uploads article to **S3**.  
+2. **S3 Event Notification** triggers a Lambda function.  
+3. **Lambda** fetches file, processes it (via Mistral API), and stores results in **DynamoDB**.  
+4. Frontend fetches data from backend API for display.
 
+## ⚖️ Scalability Notes
 
+- 📦 **Amazon S3** scales automatically to handle any number of uploads.  
+- ⚡ **AWS Lambda** scales with concurrent executions to handle bursts of files.  
+- 📚 **DynamoDB** in **On-Demand** mode scales seamlessly for reads/writes.  
+- 🔄 Event-driven architecture smooths out load spikes by queuing events naturally.
 
+## 🛡️ Availability Notes
 
+- 🌍 High availability by default; All core services (S3, Lambda, DynamoDB) are **multi-AZ** by default.
+- 🔁 Use **retry logic** in Lambda and error handling for failed processes.  
+- 🏢 Elastic Beanstalk backend can be deployed across multiple Availability Zones for redundancy.
 
+## 💰 Cost Efficiency Notes
 
-
-
-
-
-
-
-
-
-
-# ==================================================================================================
-
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- ⏳ Lambda charges only for actual compute time, saving cost when idle.  
+- 💡 DynamoDB On-Demand avoids paying for unused capacity.  
+- 🎯 Event-driven processing avoids overprovisioning compute resources.
