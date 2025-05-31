@@ -50,7 +50,7 @@ function ResultDisplay({ result }) {
       {result.organizations?.length ? (
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 16 }}>
           <tbody>
-            {result.countries.map((organization, i) => (
+            {result.organizations.map((organization, i) => (
               <tr key={i}>
                 <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>
                   <Text>{organization}</Text>
