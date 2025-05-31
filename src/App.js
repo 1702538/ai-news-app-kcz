@@ -39,25 +39,6 @@ function App() {
     clearState();
   };
 
-  if (auth.isLoading) {
-    return <div>Loading authentication...</div>;
-  }
-
-  if (auth.error) {
-    return <div>Error: {auth.error.message}</div>;
-  }
-
-  if (!auth.isAuthenticated) {
-    return (
-      <div style={{ padding: 20, textAlign: "center" }}>
-        <Title level={3}>Please sign in to continue</Title>
-        <Button type="primary" onClick={() => auth.signinRedirect()}>
-          Sign In
-        </Button>
-      </div>
-    );
-  }
-
   return (
   <div style={{ height: "100dvh", display: "flex", flexDirection: "column" }}>
     {/* Top-right user avatar */}
@@ -128,7 +109,6 @@ function App() {
       {result && <ResultDisplay result={result} />}
     </div>
 
-    {/* Footer stays pinned below */}
     <Footer />
   </div>
 );
