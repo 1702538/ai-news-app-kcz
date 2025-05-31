@@ -6,8 +6,8 @@ import { UserOutlined } from "@ant-design/icons";
 import TextInputForm from "./components/TextInputForm";
 import FileUploader from "./components/FileUploader";
 import ResultDisplay from "./components/ResultDisplay";
+import useApi from './hooks/useApi';
 import Footer from "./components/Footer";
-import useApi from "./hooks/useApi";
 
 const { Title, Text } = Typography;
 
