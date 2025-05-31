@@ -1,16 +1,17 @@
-# AI News Search Web Application
+# AI News Search App
 
-An AI-powered web application that allows users to input or upload news articles in English or French. It returns a summary along with detected nationalities and people, with optional detection of organizations. Supports user authentication via AWS Cognito.
+This is an AI-powered web application that allows users to upload text files, documents files (.doc or .docx) or input text input of news articles (with multi-language support) to generate a summary and a list of detected nationalities, people, and optionally organizations.
 
 ---
 
 ## 🚀 Features
 
-- 🔐 User authentication (OIDC-based)
-- 📄 Allow single file upload `.txt`, `.doc`, or `.docx` files
-- 🌍 Multi-language support (E.g., English & French)
-- 👤 Detect people and nationalities
+- 🔐 User authentication via AWS Cognito (OIDC-based)
+- 📄 Upload `.txt`, `.doc`, or `.docx` files or enter raw text
+- 🌍 Multi-language support (English & French)
+- 👤 Detect people and nationalities (organizations optional)
 - 🧠 Summarize news using an AI backend
+- 📡 Optional AWS integration (S3, DynamoDB)
 - 📱 Responsive frontend with Ant Design
 
 ---
@@ -20,11 +21,19 @@ An AI-powered web application that allows users to input or upload news articles
 ### Prerequisites
 
 - Node.js (>=18)
-- Antd Design
+- Python 3.10+ (for backend if used)
+- AWS CLI (if using AWS features)
+- `.env` files configured as needed
 
 ### Frontend Setup
 
+```bash
+cd ai-news-app-ui
+npm install
+npm start
 
+
+---
 
 
 
