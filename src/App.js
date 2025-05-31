@@ -59,7 +59,7 @@ function App() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <div style={{ minHeight: "98vh", display: "flex", flexDirection: "column" }}>
       {/* Top-right user avatar */}
       <div
         style={{
