@@ -59,7 +59,7 @@ function App() {
   }
 
   return (
-    <div style={{ minHeight: "95vh", display: "flex", flexDirection: "column" }}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       {/* Top-right user avatar */}
       <div
         style={{
@@ -129,7 +129,7 @@ function App() {
       </div>
 
       {/* Footer stays pinned below */}
-      <Footer />
+      <Footer style={{ marginTop: "auto" }} />
     </div>
   );
 }
