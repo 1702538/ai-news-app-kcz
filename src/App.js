@@ -59,7 +59,7 @@ function App() {
   }
 
   return (
-    <div style={{ minHeight: "100dvh", display: "flex", flexDirection: "column" }}>
+    <div style={{ height: "100dvh", display: "flex", flexDirection: "column" }}>
       {/* Top-right user avatar */}
       <div
         style={{
@@ -95,10 +95,11 @@ function App() {
         </Popover>
       </div>
 
-      {/* Main layout restored to old design */}
+      {/* Main content area */}
       <div
         style={{
           flex: 1,
+          overflow: "auto",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -128,6 +129,7 @@ function App() {
         {result && <ResultDisplay result={result} />}
       </div>
 
+      {/* Footer stays pinned below */}
       <Footer />
     </div>
   );
