@@ -102,7 +102,7 @@ function App() {
           overflow: "auto",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
+          justifyContent: "flex-start",  // Changed from "center"
           alignItems: "center",
           padding: 20,
           gap: 24,
