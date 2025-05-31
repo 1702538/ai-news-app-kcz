@@ -45,6 +45,23 @@ function ResultDisplay({ result }) {
       ) : (
         <Paragraph italic>No countries identified.</Paragraph>
       )}
+
+       <Title level={4}>Organizations Mentioned</Title>
+      {result.organizations?.length ? (
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 16 }}>
+          <tbody>
+            {result.countries.map((organization, i) => (
+              <tr key={i}>
+                <td style={{ padding: '8px', borderBottom: '1px solid #eee' }}>
+                  <Text>{organization}</Text>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <Paragraph italic>No countries identified.</Paragraph>
+      )}
     </div>
   );
 }
