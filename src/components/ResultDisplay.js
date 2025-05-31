@@ -1,3 +1,7 @@
+import { Typography } from 'antd';
+
+const { Title, Paragraph, Text } = Typography;
+
 function ResultDisplay({ result }) {
   const parsedResult = typeof result === 'string' ? JSON.parse(result) : result;
 
