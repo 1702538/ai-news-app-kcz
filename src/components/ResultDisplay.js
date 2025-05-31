@@ -63,3 +63,4 @@ function ResultDisplay({ result }) {
     </div>
   );
 }
+export default ResultDisplay;
