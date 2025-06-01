@@ -9,13 +9,54 @@ An AI-powered web application that allows users to input or upload news articles
 - 🔐 User authentication (OIDC-based)
 - 📄 Allow single file upload `.txt`, `.doc`, or `.docx` files
 - 🌍 Multi-language support (E.g., English & French)
-- 👤 Detect people and nationalities
+- 👤 Detect people, nationalities and organizations
 - 🧠 Summarize news using an AI backend
 - 📱 Responsive frontend with Ant Design
 - 🔑 HTTPS Configured with LetsEncrypt
 
 ---
 
+## 🤖 Language Model Used
+
+This project utilizes the **Mixtral-8x22B-Instruct** model from **Mistral AI** due to its **FREE 1 API call per second plan**.
+
+- **Model:** `Mixtral-8x22B-Instruct`
+- **Architecture:** Sparse Mixture-of-Experts (SMoE)
+- **Total Parameters:** 141B
+- **Active Parameters per Inference:** 39B
+- **Context Window:** 64K tokens
+- **License:** Apache 2.0 (commercial use permitted)
+- **Usage:** Powers the backend to summarize articles and extract entities such as nationalities, people, and organizations
+
+---
+
+## 🚀 Technology Stack Used
+
+| Component           | Technology / Service               | Description                          |
+|---------------------|----------------------------------|------------------------------------|
+| 🖥️ Frontend         | React.js + Ant Design             | UI framework and design components |
+| 🌐 Frontend API Call | Fetch API                        | Native HTTP requests in browser    |
+| ⚙️ Backend          | Node.js                          | Server-side API                    |
+| 🔐 Authentication    | AWS Cognito (OIDC / JWT)          | User sign-in and token management  |
+| 💾 Database          | AWS DynamoDB                     | NoSQL database for app data        |
+| 🤖 AI Processing     | Mistral AI API                   | Summarization and entity detection |
+| ☁️ Hosting           | AWS Elastic Beanstalk, AWS Amplify | App deployment and hosting          |
+| 🌐 Domain & SSL      | CloudNS, Let’s Encrypt           | DNS management and HTTPS certificates |
+| 🛠️ Tools            | Git, Visual Studio Code, Postman | Development and API testing tools  |
+---
+
+## ✨ Bonus Features Implementation
+
+| Feature                                                                 | Implemented? | Notes                                                                 |
+|:-----------------------------------------------------------------------|:--------------:|:-------------------------------------------------------------------|
+| Handle multi-language news articles (e.g., English + French)           | ✅           | Mistrial AI auto-translate the text and returns in English           |
+| Detect organizations/people involved too, along with nationalities     | ✅           | Mistrial AI extracts named entities including oeganizations, people, nationalities |
+| Save the uploaded articles and analysis results to a database          | ✅           | Stored in DynamoDB                                                   |
+| Add user authentication (simple login/signup)                          | ✅           | Implemented with AWS Cognito                                         |
+| Use AWS services for storage (e.g., S3 for file upload)                | ✅           | Using DynamoDB qualifies as AWS storage service                      |
+| WebSocket support for real-time processing updates                     | ❌           | Not implemented yet                                                  |
+
+---
 ## 🛠️ Setup Instructions
 
 ### Software / Tools
@@ -27,7 +68,7 @@ An AI-powered web application that allows users to input or upload news articles
 - GitHub Account (For Code Repository)
 - AWS Account (For managing AWS Services)
 - Mistral AI Account (Free Tier - 1 API/second)
-- CLOUDNS Account (To manage DNS Services)
+- CloudNS Account (To manage DNS Services)
 - Postman Account (For API development)
 - Any email account (To sign up for account on React web application)
 
@@ -35,7 +76,7 @@ An AI-powered web application that allows users to input or upload news articles
 
 - Node.js (>= 18.x)
 - Antd Design (>= 5.x)
-- CLOUDNS Account with subdomain set up
+- CloudNS Account with subdomain set up
 - AWS Account with the following services set up:
   - AWS Amplify
   - Amazon Elastic Beanstalk
@@ -241,7 +282,7 @@ sudo systemctl reload nginx
 
 ---
 
-# Deployment Notes
+## 📥 Deployment Notes
 - Use AWS Elastic Beanstalk for backend deployment.
 - Ensure proper IAM roles with DynamoDB read/write access are attached to backend EC2 instances.
 - Frontend can be hosted via Amplify or static hosting (e.g., GitHub Pages).
@@ -250,7 +291,7 @@ sudo systemctl reload nginx
 
 ---
 
-# API Documentation (Brief)
+## 🔗 API Documentation (Brief)
 ### POST /analyze
 - Submit article text for summary and entity detection.
 - Request: JSON { "text": "article text" }
@@ -259,3 +300,23 @@ sudo systemctl reload nginx
 ### Authentication
 - Uses AWS Cognito tokens (JWT) via OIDC.
 
+---
+
+## ✅ Assumptions
+
+- Users will upload or input news articles in 1-2 langauges.
+- Input files are limited to `.txt`, `.doc`, or `.docx` formats.
+- Authentication is handled via AWS Cognito with valid JWT tokens.
+- The backend AI service (Mistral API) is available and responsive.
+- CloudNS domain and SSL certificates are properly configured for HTTPS.
+
+## ⚠️ Limitations
+
+- The AI summarization and entity detection accuracy depends on the quality of the input text.
+- Formatting of the results may not be accurate 100% from Mistral AI, which may cause the results to be combined into one row (for people, country and organization)
+- Large files or very long articles may result in slower processing or timeouts.
+- Currently supports only people, nationalities, and optionally organizations detection — other entity types are not supported.
+- User authentication relies on AWS Cognito and no other authentication methods will be supported.
+- API rate limits apply based on Mistral AI’s free tier (1 request/second).
+- HTTPS setup requires manual SSL certificate renewal unless automated.
+- Deployment and DNS management require manual intervention. No auto-provisioning of resources.
