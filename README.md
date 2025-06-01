@@ -33,16 +33,18 @@ This project utilizes the **Mixtral-8x22B-Instruct** model from **Mistral AI** d
 ## 🚀 Technology Stack Used
 
 | Component           | Technology / Service               | Description                          |
-|:---------------------|:----------------------------------|:------------------------------------|
-| 🖥️ Frontend         | React.js + Ant Design             | UI framework and design components |
-| 🌐 Frontend API Call | Fetch API                        | Native HTTP requests in browser    |
-| ⚙️ Backend          | Node.js                          | Server-side API                    |
-| 🔐 Authentication    | AWS Cognito (OIDC / JWT)          | User sign-in and token management  |
-| 💾 Database          | AWS DynamoDB                     | NoSQL database for app data        |
-| 🤖 AI Processing     | Mistral AI API                   | Summarization and entity detection |
+|:---------------------|:----------------------------------|:-------------------------------------|
+| 🖥️ Frontend         | React.js + Ant Design             | UI framework and design components    |
+| 🌐 Frontend API Call | Fetch API                        | Native HTTP requests in browser       |
+| ⚙️ Backend          | Node.js                           | Server-side API                       |
+| 🔐 Authentication    | AWS Cognito (OIDC / JWT)         | User sign-in and token management     |
+| 💾 Database          | AWS DynamoDB                     | NoSQL database for app data           |
+| 🤖 AI Processing     | Mistral AI API                   | Summarization and entity detection    |
+| 📄 Documment Processing | Mammoth                       | Converts .docx files to text          |
 | ☁️ Hosting           | AWS Elastic Beanstalk, AWS Amplify | App deployment and hosting          |
 | 🌐 Domain & SSL      | CloudNS, Let’s Encrypt           | DNS management and HTTPS certificates |
-| 🛠️ Tools            | Git, Visual Studio Code, Postman | Development and API testing tools  |
+| 🛠️ Tools            | Git, Visual Studio Code, Postman | Development and API testing tools      |
+
 ---
 
 ## ✨ Bonus Features Implementation
