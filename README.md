@@ -311,6 +311,7 @@ sudo systemctl reload nginx
 ## ⚠️ Limitations
 
 - The AI summarization and entity detection accuracy depends on the quality of the input text.
+- Legacy document files (.doc) will not be supported, as Mammoth is designed to convert .docx documents
 - Formatting of the results may not be accurate 100% of the time, which may cause the results to be combined into one row (for people, country and organization)
 - Large files or very long articles may result in slower processing or timeouts.
 - Currently supports only people, nationalities, and organizations detection.
