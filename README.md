@@ -1,4 +1,4 @@
-# AI News Search Web Application
+# AI News Search Web Application (Part 1)
 
 An AI-powered web application that allows users to input or upload news articles in English or French. It returns a summary along with detected nationalities and people, with optional detection of organizations. Supports user authentication via AWS Cognito.
 
