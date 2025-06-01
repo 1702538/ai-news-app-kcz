@@ -15,16 +15,67 @@ An AI-powered web application that allows users to input or upload news articles
 
 ---
 
-## 🛠 Setup Instructions
+## 🛠️ Setup Instructions
+
+### Software / Tools
+- Git
+- Visual Studio Code (or any IDE)
+- Postman (For viewing API outputs)
+
+### Accounts
+- GitHub Account (For Code Repository)
+- AWS Account (For managing AWS Services)
+- Mistral AI Account (Free Tier - 1 API/second)
+- CLOUDNS Account (To manage DNS Services)
+- Postman Account (For API development)
+- Any email account (To sign up for account on React web application)
 
 ### Prerequisites
 
-- Node.js (>=18)
-- Antd Design
+- Node.js (>= 18.x)
+- Antd Design (>= 5.x)
+- CLOUDNS Account with subdomain set up
+- AWS Account with the following services set up:
+  - AWS Amplify
+  - Amazon Elastic Beanstalk
+  - Amazon Cognito
+  - DynamoDB Table
+    
+---
 
-### Frontend Setup
+### 📦 Frontend Setup
 
-- 
+```bash
+cd ai-news-app-ui
+npm install 
+vim .env
+# Edit .env with your values:
+# REACT_APP_API_URL=http://your-api-url.com
+# REACT_APP_COGNITO_CLIENT_ID=xxxxxx
+# REACT_APP_COGNITO_DOMAIN=https://yourdomain.auth.region.amazoncognito.com
+npm start
+
+```
+
+---
+
+### 📦 Backend Setup
+
+```bash
+cd backend
+npm install 
+```
+On AWS Elastic Beanstalk page
+1. Click "**Create application**" on the main page
+2. Select "**Web server environment**" under **Environment tier**
+3. Provide "**Application Name**" under **Application information**
+4. Provide "**Environment name**" under **Environment information**
+5. Select "**Node.js**" under **Platform**. Other Platform settings may remain as default
+6. Ensure that **"Single instance (free tier eligible)**" is selected under **Presets**
+7. All other settings may remain as **default**
+---
+
+## 🛠 Setup Instructions
 
 ## ☁️ AWS Services Setup
 
@@ -61,67 +112,6 @@ This application relies on several AWS services to enable user authentication an
 | **HTTPS Usage**       | Use HTTPS endpoints for secure communication between frontend and backend.                           |
 | **Monitoring**        | Regularly monitor AWS service usage and costs.                                                      |
 | **Logging & Alerts**  | Consider configuring AWS CloudWatch for logging and alerting backend services.                       |
-
-
-<br/>
-
-# Part 2: Developing Processes
-
-This section provides an overview of a proposed architecture for processing up to **10,000 news articles per hour** using AWS services, with a focus on scalability, availability and cost effectiveness. 
-
----
-
-# 🏗️ Simple News Article Processing Architecture
-
-This is a minimal AWS setup to process up to **10,000 news articles per hour** with scalability, availability, and cost in mind.
-
----
-
-## 1. Ingestion & Event Trigger
-
-| 🛠️ AWS Service           | 🎯 Role / Purpose                                                |
-|:--------------------------|:-----------------------------------------------------------------|
-| 📦 **Amazon S3**           | Store uploaded article files (`.txt`, `.doc`, `.docx`).         |
-| 🔔 **S3 Event Notification** | Trigger processing when a new file is uploaded.               |
-
-
-
-## 2. Processing & Storage
-
-| 🛠️ AWS Service          | 🎯 Role / Purpose                                                           |
-|:-------------------------|:----------------------------------------------------------------------------|
-| ⚡ **AWS Lambda**        | Calls Mistral AI API to process the data                                    |
-| 📚 **Amazon DynamoDB**   | Stores the processed data from Mistral AI (people, countries, organizations |
-
-
-## 3. API / Frontend Layer
-
-| 🛠️ AWS Service                  | 🎯 Role / Purpose                               |
-|:--------------------------------|:-------------------------------------------------|
-| 🌐 **Elastic Beanstalk**        | Hosts backend API that serves processed data.    |
-| 🖥️ **React App**                | Frontend UI to display data, hosted on Amplify.  |
-
-## Workflow Summary
-
-1. User uploads article to **S3**.  
-2. **S3 Event Notification** triggers a Lambda function.  
-3. **Lambda** fetches file, processes it (via Mistral API), and stores results in **DynamoDB**.  
-4. Frontend fetches data from backend API for display.
-
-## ⚖️ Scalability Notes
-
-- 📦 **Amazon S3** scales automatically to handle any number of uploads.  
-- ⚡ **AWS Lambda** scales with concurrent executions to handle bursts of files.  
-- 📚 **DynamoDB** in **On-Demand** mode scales seamlessly for reads/writes.  
-- 🔄 Event-driven architecture smooths out load spikes by queuing events naturally.
-
-## 🛡️ Availability Notes
-
-- 🌍 High availability by default; All core services (S3, Lambda, DynamoDB) are **multi-AZ** by default.
-- 🔁 Use **retry logic** in Lambda and error handling for failed processes.  
-- 🏢 Elastic Beanstalk backend can be deployed across multiple Availability Zones for redundancy.
-
-## 💰 Cost Efficiency Notes
 
 - ⏳ Lambda charges only for actual compute time, saving cost when idle.  
 - 💡 DynamoDB On-Demand avoids paying for unused capacity.  
