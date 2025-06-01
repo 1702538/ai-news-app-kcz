@@ -17,7 +17,7 @@ GitHub Repo URL: https://github.com/1702538/ai-news-app-kcz
 ## 🌟 Features
 
 - 🔐 User authentication (OIDC-based)
-- 📄 Allow single file upload `.txt`, `.doc`, or `.docx` files
+- 📄 Allow single file upload `.txt` or `.docx` files
 - 🌍 Multi-language support (E.g., English & French)
 - 👤 Detect people, nationalities and organizations
 - 🧠 Summarize news using an AI backend
@@ -315,7 +315,7 @@ sudo systemctl reload nginx
 ## ✅ Assumptions
 
 - Users will upload or input news articles in 1-2 langauges.
-- Input files are limited to `.txt` and `.docx` formats.
+- Input files are limited to `.txt` or `.docx` formats.
 - Authentication is handled via AWS Cognito with valid JWT tokens.
 - The backend AI service (Mistral API) is available and responsive.
 - CloudNS domain and SSL certificates are properly configured for HTTPS.
