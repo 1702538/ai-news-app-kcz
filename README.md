@@ -4,7 +4,7 @@ An AI-powered web application that allows users to input or upload news articles
 
 ---
 
-#### Important URLs:
+#### 📌 Important URLs:
 
 Frontend Live URL: https://main.d25ickgp2g070n.amplifyapp.com
 
@@ -331,3 +331,11 @@ sudo systemctl reload nginx
 - API rate limits apply based on Mistral AI’s free tier (1 request/second).
 - HTTPS setup requires manual SSL certificate renewal unless automated.
 - Deployment and DNS management require manual intervention. No auto-provisioning of resources.
+
+--- 
+
+### 📊 Sample Output
+
+![image](https://github.com/user-attachments/assets/57066269-ebc9-44b4-81a0-2dad4b1ee4c3)
+
+
