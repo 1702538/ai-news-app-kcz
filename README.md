@@ -62,7 +62,7 @@ This project utilizes the **Mixtral-8x22B-Instruct** model from **Mistral AI** d
 | Feature                                                                 | Implemented? | Notes                                                                 |
 |:-----------------------------------------------------------------------|:--------------:|:-------------------------------------------------------------------|
 | Handle multi-language news articles (e.g., English + French)           | ✅           | Mistrial AI auto-translate the text and returns in English           |
-| Detect organizations/people involved too, along with nationalities     | ✅           | Mistrial AI extracts named entities including oeganizations, people, nationalities |
+| Detect organizations/people involved too, along with nationalities     | ✅           | Mistrial AI extracts named entities including organizations, people, nationalities |
 | Save the uploaded articles and analysis results to a database          | ✅           | Stored in DynamoDB                                                   |
 | Add user authentication (simple login/signup)                          | ✅           | Implemented with AWS Cognito                                         |
 | Use AWS services for storage (e.g., S3 for file upload)                | ✅           | Using DynamoDB qualifies as AWS storage service                      |
@@ -315,7 +315,7 @@ sudo systemctl reload nginx
 ## ✅ Assumptions
 
 - Users will upload or input news articles in 1-2 langauges.
-- Input files are limited to `.txt`, `.doc`, or `.docx` formats.
+- Input files are limited to `.txt` and `.docx` formats.
 - Authentication is handled via AWS Cognito with valid JWT tokens.
 - The backend AI service (Mistral API) is available and responsive.
 - CloudNS domain and SSL certificates are properly configured for HTTPS.
