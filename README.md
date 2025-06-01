@@ -12,6 +12,7 @@ An AI-powered web application that allows users to input or upload news articles
 - 👤 Detect people and nationalities
 - 🧠 Summarize news using an AI backend
 - 📱 Responsive frontend with Ant Design
+- 🔑 HTTPS Configured with LetsEncrypt
 
 ---
 
@@ -70,11 +71,15 @@ npm install
 
 **Pre-requisite:**
 - Prepare the backend files by zipping the backend files into a .zip file
-- Ensure that you have created the appropriate **Service role**, **EC2 instance profile** and **EC2 key pair**
+- Ensure that you have created the appropriate 
+  - **Service role**
+  - **EC2 instance profile**
+  - **EC2 key pair**
 
 #### [Create Environment on AWS Elastic Beanstalk page]
 
-Click "**Create application**" on the main page
+1. Go to  AWS Elastic Beanstalk on AWS Console
+2. Click "**Create application**" on the main page
 
 *Step 1 - Configure environment*
 
@@ -107,15 +112,84 @@ Click "**Create application**" on the main page
 6. Click on **Deploy**
 7. Wait for the backend environment to be deployed (Check for "**OK**" status)
 
+---
 
+### 📦 Configure Cloudns (To be used for HTTPS with LetsEncrypt)
 
+*Creating new domain on Cloudns*
 
+1. Go to Cloudns (https://www.cloudns.net) to create a  
+2. Sign in / register for an account on Cloudns
+3. Click on "**create zone**" under **DNS Hosting**
+4. Select "**Free domain**" and provide a domain name
+5. Click on **Create** to create a new domain
 
+*Creating new web server hostname*
 
-
-
+1. After the domain has beeen created, click on the domain
+2. Click on "CNAME" and "Add new record" to add a new CNAME record
+3. Under "Host", enter a "name" for the web server (Elastic Beanstalk EC2 instance)
+4. Under Points to, enter the IPv4 DNS of the Elastic Beanstalk EC2 instance (e.g., ec2-xx-xxx-xx-xx.ap-southeast-1.compute.amazonaws.com)
+5. Click on **Save**
 
 ---
+
+### 📦 Configure EC2 Instance for HTTPS Access
+
+1. Perform SSH connection to EC2 instanace for Backend Server (EC2 on AWS Elastic Beanstalk)
+```
+ssh -i /path/to/key.pem ec2-user@<your-ec2-public-dns>
+```
+2. Update EC2 system and install required packages
+```
+sudo yum update -y
+sudo amazon-linux-extras enable epel
+sudo yum install -y epel-release
+sudo yum install -y nginx certbot python3-certbot-nginx
+```
+3. Start and enable NGINX
+```
+sudo systemctl start nginx
+sudo systemctl enable nginx
+```
+4. Issue SSL certificate using Certbot with NGINX plugin
+```
+sudo certbot --nginx -d backend.ai-news-app.ip-ddns.com
+```
+5. Navigate to conf.d directory and create a new ssl.conf file
+```
+cd /etc/nginx/conf.d/
+sudo vi ssl.conf
+```
+6. Enter the following code into the ssl.conf file
+```
+server {
+          listen 443 ssl;
+          server_name <full web server URL from cloudns>;
+
+          ssl_certificate /etc/letsencrypt/live/backend.ai-news-app.ip-ddns.com/fullchain.pem;
+          ssl_certificate_key /etc/letsencrypt/live/backend.ai-news-app.ip-ddns.com/privkey.pem;
+
+          location / {
+              proxy_pass http://127.0.0.1:8080;
+              proxy_http_version 1.1;
+              proxy_set_header Connection $connection_upgrade;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          }
+}
+server {
+          listen 80;
+          server_name <full web server URL from cloudns>;
+          return 301 https://$host$request_uri;
+}
+```
+
+
+
+
 
 ## 🛠 Setup Instructions
 
