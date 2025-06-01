@@ -4,6 +4,16 @@ An AI-powered web application that allows users to input or upload news articles
 
 ---
 
+#### Important URLs:
+
+Frontend Live URL: https://main.d25ickgp2g070n.amplifyapp.com
+
+Backend Live URL: https://backend.ai-news-app.ip-ddns.com
+
+GitHub Repo URL: https://github.com/1702538/ai-news-app-kcz
+
+---
+
 ## 🌟 Features
 
 - 🔐 User authentication (OIDC-based)
