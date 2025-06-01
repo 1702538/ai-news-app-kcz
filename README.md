@@ -210,7 +210,7 @@ npm install
 
 ---
 
-### 🔏 Configure EC2 Instance for HTTPS Access
+### 🔏 Configure Elastic Beanstalk for HTTPS Access
 
 1. Perform SSH connection to EC2 instanace for Backend Server (EC2 on AWS Elastic Beanstalk)
 ```
