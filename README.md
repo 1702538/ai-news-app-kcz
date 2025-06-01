@@ -44,7 +44,7 @@ An AI-powered web application that allows users to input or upload news articles
     
 ---
 
-### 📦 Frontend Setup
+### 🧑‍💻 Frontend Setup
 
 ```bash
 cd ai-news-app-ui
@@ -60,7 +60,7 @@ npm start
 
 ---
 
-### 📦 Backend Setup
+### ⚙️ Backend Setup
 
 ```bash
 cd backend
@@ -127,14 +127,37 @@ npm install
 *Creating new web server hostname*
 
 1. After the domain has beeen created, click on the domain
-2. Click on "CNAME" and "Add new record" to add a new CNAME record
-3. Under "Host", enter a "name" for the web server (Elastic Beanstalk EC2 instance)
-4. Under Points to, enter the IPv4 DNS of the Elastic Beanstalk EC2 instance (e.g., ec2-xx-xxx-xx-xx.ap-southeast-1.compute.amazonaws.com)
-5. Click on **Save**
+2. Click on "**CNAME**" and "**Add new record**" to add a new CNAME record
+3. Under "**Host**", enter a "**name**" for the web server (Elastic Beanstalk EC2 instance)
+4. Under "**Points to**", enter the **IPv4 DNS of the Elastic Beanstalk EC2 instance**
+   - e.g., ec2-xx-xxx-xx-xx.ap-southeast-1.compute.amazonaws.com
+6. Click on **Save**
+
+---
+### 🔒 Steps to Edit Security Group for EC2
+
+1. Navigate to **EC2** from the AWS Console
+2. Select your **EC2 instance** → **Left Sidebar** → **Network & Security** → **Security Groups**
+3. Click on the **Security group ID** for the Elastic Beanstalk environment
+4. Click **Edit inbound rules**
+
+5. Add/edit the following rules by clicking **Add Rule** for each:
+
+   | Type  | Protocol | Port Range | Source     | Description           |
+   |-------|----------|------------|------------|-----------------------|
+   | HTTP  | TCP      | 80         | 0.0.0.0/0  | Allow HTTP traffic     |
+   | HTTPS | TCP      | 443        | 0.0.0.0/0  | Allow HTTPS traffic    |
+   | HTTPS | SSH      | 22        | 0.0.0.0/0  | Allow SSH traffic    |
+
+6. Click **Save rules**.
+
+#### Notes:
+- `0.0.0.0/0` opens the ports to all IP addresses (public internet).  
+- For improved security, limit the **Source** to trusted IP ranges where possible.
 
 ---
 
-### 📦 Configure EC2 Instance for HTTPS Access
+### 🔏 Configure EC2 Instance for HTTPS Access
 
 1. Perform SSH connection to EC2 instanace for Backend Server (EC2 on AWS Elastic Beanstalk)
 ```
@@ -186,49 +209,53 @@ server {
           return 301 https://$host$request_uri;
 }
 ```
+7. Test NGINX configuration for syntax errors
+```
+sudo nginx -t
+```
+8. Reload NGINX to apply changes without downtime
+```
+sudo systemctl reload nginx
+```
 
+---
 
+### 👥 Steps to Set Up AWS Cognito User Pool
 
+1. Navigate to **Cognito** from the AWS Console
+2. Click on "**Get started for free in less than five minutes**"
+3. Click on "**Single-page application (SPA)**" under **Define your application**
+4. Provide a "**name**" for your user pool under **Name your application**
+5. Set Up Sign-in Options
+   - Select how users will sign in (email, username, phone number, etc.).
+6. Add a return URL
+   - Enter the URL of the main React app by default
+7. Click on **Create user directory**
 
+---
 
-## 🛠 Setup Instructions
+#### Notes:
 
-## ☁️ AWS Services Setup
+- Use the **User Pool ID** and **App Client ID** to integrate authentication into your app.  
+- You can enable hosted UI or use SDKs (Amplify, AWS SDK) for sign-in, sign-up, and token handling.
 
-This application relies on several AWS services to enable user authentication and backend AI processing.
+---
 
-### 1. 🔐 AWS Cognito
+# Deployment Notes
+- Use AWS Elastic Beanstalk for backend deployment.
+- Ensure proper IAM roles with DynamoDB read/write access are attached to backend EC2 instances.
+- Frontend can be hosted via Amplify or static hosting (e.g., GitHub Pages).
+- Configure DNS and SSL certificates for secure HTTPS access.
+- Monitor Elastic Beanstalk environment health during deployments.
 
-| Item                | Description                                                                                                      |
-|---------------------|------------------------------------------------------------------------------------------------------------------|
-| **User Pool**       | Create a Cognito User Pool to manage user registration, sign-in, and profiles.                                   |
-| **App Client**      | Create an App Client under the User Pool without a client secret for use in the frontend.                        |
-| **Domain**          | Set up a Cognito Hosted UI domain or use your custom domain for authentication flows.                            |
-| **Callback URLs**   | Configure callback URLs to point to your frontend app (e.g., `http://localhost:3000` for development, or production URL). |
-| **OAuth 2.0 Settings** | Enable authorization code grant flow and specify allowed scopes (`openid`, `profile`, `email`).                 |
- 
-### 2. 🖥️ Backend API Hosting
+---
 
-| Item               | Description                                                                                                   |
-|:--------------------|:---------------------------------------------------------------------------------------------------------------|
-| **Hosting Options** | AWS Elastic Beanstalk (for containerized or Node.js apps)                                                  |
-| **API Endpoint**    | Ensure the API endpoint URL is configured in frontend environment variables (`REACT_APP_API_URL`).              |
+# API Documentation (Brief)
+### POST /analyze
+- Submit article text for summary and entity detection.
+- Request: JSON { "text": "article text" }
+- Response: JSON containing summary, detected people, nationalities, and organizations.
 
-### 3. 🛡️ IAM Roles and Permissions
+### Authentication
+- Uses AWS Cognito tokens (JWT) via OIDC.
 
-| Item                       | Description                                                                              |
-|:----------------------------|:------------------------------------------------------------------------------------------|
-| **Least-privilege Roles**  | Assign least-privilege IAM roles to backend services for secure AWS resource access.     |
-| **Cognito Permissions**    | Ensure the Cognito User Pool has proper permissions and policies for app integration.     |
-
-### 4. ⚠️ Additional Notes
-
-| Item                  | Description                                                                                          |
-|:-----------------------|:------------------------------------------------------------------------------------------------------|
-| **HTTPS Usage**       | Use HTTPS endpoints for secure communication between frontend and backend.                           |
-| **Monitoring**        | Regularly monitor AWS service usage and costs.                                                      |
-| **Logging & Alerts**  | Consider configuring AWS CloudWatch for logging and alerting backend services.                       |
-
-- ⏳ Lambda charges only for actual compute time, saving cost when idle.  
-- 💡 DynamoDB On-Demand avoids paying for unused capacity.  
-- 🎯 Event-driven processing avoids overprovisioning compute resources.
