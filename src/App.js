@@ -49,7 +49,16 @@ function App() {
 
   if (!auth.isAuthenticated) {
     return (
-      <div style={{ padding: 20, textAlign: "center" }}>
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+        <Title>AI News Search</Title>
         <Title level={3}>Please sign in to continue</Title>
         <Button type="primary" onClick={() => auth.signinRedirect()}>
           Sign In
@@ -77,7 +86,7 @@ function App() {
           placement="bottomRight"
           content={
             <div style={{ display: "flex", flexDirection: "column", gap: 8, minWidth: 180 }}>
-              <span><strong>Hello! You are</strong></span>
+              <span><strong>Logged in as</strong></span>
               <div>{auth.user?.profile.email || "User"}</div>
               <Button
                 type="primary"
