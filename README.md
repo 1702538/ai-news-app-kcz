@@ -273,8 +273,6 @@ sudo systemctl reload nginx
    - Enter the URL of the main React app by default
 7. Click on **Create user directory**
 
----
-
 #### Notes:
 
 - Use the **User Pool ID** and **App Client ID** to integrate authentication into your app.  
