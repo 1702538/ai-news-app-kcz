@@ -4,7 +4,7 @@ An AI-powered web application that allows users to input or upload news articles
 
 ---
 
-## 🚀 Features
+## 🌟 Features
 
 - 🔐 User authentication (OIDC-based)
 - 📄 Allow single file upload `.txt`, `.doc`, or `.docx` files
@@ -33,7 +33,7 @@ This project utilizes the **Mixtral-8x22B-Instruct** model from **Mistral AI** d
 ## 🚀 Technology Stack Used
 
 | Component           | Technology / Service               | Description                          |
-|---------------------|----------------------------------|------------------------------------|
+|:---------------------|:----------------------------------|:------------------------------------|
 | 🖥️ Frontend         | React.js + Ant Design             | UI framework and design components |
 | 🌐 Frontend API Call | Fetch API                        | Native HTTP requests in browser    |
 | ⚙️ Backend          | Node.js                          | Server-side API                    |
