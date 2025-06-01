@@ -54,7 +54,7 @@ This project utilizes the **Mixtral-8x22B-Instruct** model from **Mistral AI** d
 | Save the uploaded articles and analysis results to a database          | ✅           | Stored in DynamoDB                                                   |
 | Add user authentication (simple login/signup)                          | ✅           | Implemented with AWS Cognito                                         |
 | Use AWS services for storage (e.g., S3 for file upload)                | ✅           | Using DynamoDB qualifies as AWS storage service                      |
-| WebSocket support for real-time processing updates                     | ❌           | Not implemented yet                                                  |
+| WebSocket support for real-time processing updates                     | ❌           | Not implemented                                                      |
 
 ---
 ## 🛠️ Setup Instructions
@@ -313,10 +313,10 @@ sudo systemctl reload nginx
 ## ⚠️ Limitations
 
 - The AI summarization and entity detection accuracy depends on the quality of the input text.
-- Formatting of the results may not be accurate 100% from Mistral AI, which may cause the results to be combined into one row (for people, country and organization)
+- Formatting of the results may not be accurate 100% of the time, which may cause the results to be combined into one row (for people, country and organization)
 - Large files or very long articles may result in slower processing or timeouts.
-- Currently supports only people, nationalities, and optionally organizations detection — other entity types are not supported.
-- User authentication relies on AWS Cognito and no other authentication methods will be supported.
+- Currently supports only people, nationalities, and organizations detection.
+- User authentication relies on AWS Cognito.
 - API rate limits apply based on Mistral AI’s free tier (1 request/second).
 - HTTPS setup requires manual SSL certificate renewal unless automated.
 - Deployment and DNS management require manual intervention. No auto-provisioning of resources.
