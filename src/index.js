@@ -6,6 +6,7 @@ import cognitoAuthConfig from "./utils/authConfig";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
+// Render the application wrapped with AuthProvider to provide OIDC authentication context
 root.render(
   <React.StrictMode>
     <AuthProvider {...cognitoAuthConfig}>

@@ -4,7 +4,6 @@ import { UploadOutlined } from '@ant-design/icons';
 import { parseFile } from '../utils/fileParser';
 
 // Destructure the Text component from Ant Design's Typography module
-// Used to display styled text elements in the UI
 const { Text } = Typography;
 
 // Define a list of allowed MIME types for uploaded files

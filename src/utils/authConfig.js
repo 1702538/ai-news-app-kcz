@@ -1,5 +1,7 @@
+// Get the Cognito domain URL from environment variables
 const cognitoDomain = process.env.REACT_APP_COGNITO_DOMAIN;
 
+// Configuration object for Cognito authentication
 const cognitoAuthConfig = {
   authority: cognitoDomain,
   client_id: process.env.REACT_APP_COGNITO_CLIENT_ID,
