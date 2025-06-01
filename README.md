@@ -30,7 +30,7 @@ An AI-powered web application that allows users to input or upload news articles
 - Postman Account (For API development)
 - Any email account (To sign up for account on React web application)
 
-### Prerequisites
+### Pre-requisites:
 
 - Node.js (>= 18.x)
 - Antd Design (>= 5.x)
@@ -65,14 +65,56 @@ npm start
 cd backend
 npm install 
 ```
-On AWS Elastic Beanstalk page
-1. Click "**Create application**" on the main page
-2. Select "**Web server environment**" under **Environment tier**
-3. Provide "**Application Name**" under **Application information**
-4. Provide "**Environment name**" under **Environment information**
-5. Select "**Node.js**" under **Platform**. Other Platform settings may remain as default
-6. Ensure that **"Single instance (free tier eligible)**" is selected under **Presets**
-7. All other settings may remain as **default**
+
+#### [To upload backend files]
+
+**Pre-requisite:**
+- Prepare the backend files by zipping the backend files into a .zip file
+- Ensure that you have created the appropriate **Service role**, **EC2 instance profile** and **EC2 key pair**
+
+#### [Create Environment on AWS Elastic Beanstalk page]
+
+Click "**Create application**" on the main page
+
+*Step 1 - Configure environment*
+
+1. Select "**Web server environment**" under **Environment tier**
+2. Provide "**Application Name**" under **Application information**
+3. Provide "**Environment name**" under **Environment information**
+4. Select "**Node.js**" under **Platform**. Other Platform settings may remain as default
+5. Ensure that **"Single instance (free tier eligible)**" is selected under **Presets**
+6. All other settings may remain as **default**
+7. Click on **Next**
+ 
+*Step 2 - Configure service access*
+
+1. Select the **Service role**, **EC2 instance profile** and **EC2 key pair**
+2. In the event the above are not create, create the respective roles
+3. Click on **Skip to Preview** 
+
+*Step 6 - Review*
+
+1. Verify that all the information for the environment is correct
+2. Click on **Create** to complete the setup 
+
+#### [To upload backend files to AWS Elastic Beanstalk]
+
+1. Find and click on the Elastic Beanstalk environment (e.g., "**app-env**")
+2. Click on "**Upload and deploy**"
+3. Click "**Choose file**" under **Upload application**
+4. Select the .zip file and upload the .zip file
+5. Provide a "**Version label**" under **Version label** (e.g., 1.0)
+6. Click on **Deploy**
+7. Wait for the backend environment to be deployed (Check for "**OK**" status)
+
+
+
+
+
+
+
+
+
 ---
 
 ## 🛠 Setup Instructions
